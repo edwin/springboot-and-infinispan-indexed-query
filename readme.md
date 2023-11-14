@@ -51,6 +51,83 @@ $ docker run -p 11222:11222 -e USER=admin -e PASS=password \
 $ mvn clean package -s settings.xml
 ```
 
+## How to Test
+```
+$ curl -kv http://localhost:8080/add-user?name=cccc&age=92&address=Jogja
+*   Trying ::1:8080...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /add-user?name=cccc&age=92&address=Jogja HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.65.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 14 Nov 2023 15:55:56 GMT
+<
+* Connection #0 to host localhost left intact
+{"name":"cccc","age":92,"address":"Jogja"}
+
+
+$ curl -kv http://localhost:8080/add-user?name=bbb&age=101&address=Jogja
+*   Trying ::1:8080...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /add-user?name=bbb&age=101&address=Jogja HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.65.0
+> Accept: */*
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 14 Nov 2023 15:55:35 GMT
+<
+* Connection #0 to host localhost left intact
+{"name":"bbb","age":101,"address":"Jogja"} 
+
+
+$ curl -kv http://localhost:8080/add-user?name=aaaa&age=102&address=Jogja
+*   Trying ::1:8080...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /add-user?name=aaaa&age=102&address=Jogja HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.65.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 14 Nov 2023 15:55:49 GMT
+<
+* Connection #0 to host localhost left intact
+{"name":"aaaa","age":102,"address":"Jogja"} 
+
+
+$ curl -kv http://localhost:8080/get-user-from-address?address=Jogja"
+*   Trying ::1:8080...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /get-user-from-address?address=Jogja HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.65.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Tue, 14 Nov 2023 15:55:59 GMT
+<
+* Connection #0 to host localhost left intact
+[{"name":"cccc","age":92,"address":"Jogja"},{"name":"bbb","age":101,"address":"Jogja"},{"name":"aaaa","age":102,"address":"Jogja"}] 
+```
+
 ## Sample Proto Result
 ```
 // File name: user.proto
