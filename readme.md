@@ -23,6 +23,29 @@ $ docker run -p 11222:11222 -e USER=admin -e PASS=password \
         infinispan/server:14.0.2.Final
 ```
 
+## How to Solve
+- import `infinispan-api` from `pom.xml`
+- use `@Basic` annotation on the required properties in `User.java`
+- create `user-cache` in `Infinispan` using below XML configuration, having `User` proto as indexed entity.
+
+```xml
+<?xml version="1.0"?>
+<distributed-cache name="user-cache" owners="1" mode="SYNC" statistics="true">
+    <indexing enabled="true"
+              storage="local-heap">
+        <index-reader refresh-interval="1000"/>
+        <indexed-entities>
+            <indexed-entity>user.User</indexed-entity>
+        </indexed-entities>
+    </indexing>
+    <encoding>
+        <key media-type="application/x-protostream"/>
+        <value media-type="application/x-protostream"/>
+    </encoding>
+    <locking isolation="REPEATABLE_READ"/>
+</distributed-cache>
+```
+
 ## Build the App
 ```
 $ mvn clean package -s settings.xml
