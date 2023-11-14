@@ -50,3 +50,35 @@ $ docker run -p 11222:11222 -e USER=admin -e PASS=password \
 ```
 $ mvn clean package -s settings.xml
 ```
+
+## Sample Proto Result
+```
+// File name: user.proto
+
+syntax = "proto2";
+
+package user;
+
+
+
+/**
+ * @Indexed(index="index01", enabled=true)
+ */
+message User {
+   
+   /**
+    * @Basic(name="", sortable=true, projectable=false, aggregable=false, indexNullAs="__Infinispan_indexNullAs_doNotIndexNull", searchable=true)
+    */
+   required string name = 1;
+   
+   /**
+    * @Basic(name="", sortable=true, projectable=false, aggregable=false, indexNullAs="__Infinispan_indexNullAs_doNotIndexNull", searchable=true)
+    */
+   optional int32 age = 2;
+   
+   /**
+    * @Basic(name="", sortable=false, projectable=false, aggregable=false, indexNullAs="__Infinispan_indexNullAs_doNotIndexNull", searchable=true)
+    */
+   optional string address = 3;
+}
+```
